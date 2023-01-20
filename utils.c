@@ -6,7 +6,7 @@
 /*   By: aivanyan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 02:37:10 by aivanyan          #+#    #+#             */
-/*   Updated: 2023/01/20 06:47:37 by zkarapet         ###   ########.fr       */
+/*   Updated: 2023/01/20 20:56:01 by zkarapet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,10 @@ int	is_died(t_philo *philo)
 	return (0);
 }
 
-void	ft_printf(int time, int num, char *str)//, pthread_mutex_t *print)
+void	ft_printf(int time, int num, char *str, pthread_mutex_t *print)
 {
-//	pthread_mutex_lock(print);
-	printf("%d %d ", time, num);
+	pthread_mutex_lock(print);
+	printf("%d %d ", time, num + 1);
 	printf("%s\n", str);
-//	pthread_mutex_unlock(print);
+	pthread_mutex_unlock(print);
 }

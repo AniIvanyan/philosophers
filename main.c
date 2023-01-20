@@ -6,7 +6,7 @@
 /*   By: aivanyan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 02:35:29 by aivanyan          #+#    #+#             */
-/*   Updated: 2023/01/20 07:01:40 by zkarapet         ###   ########.fr       */
+/*   Updated: 2023/01/20 20:56:27 by zkarapet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 void	philo_initializer(t_philo *philo, int i, char **argv, int argc)
 {
 	philo[i].philo_num = i;
-	philo[i].time_to_die = ft_atoi(argv[2]) * 1000;
-	philo[i].time_to_eat = ft_atoi(argv[3]) * 1000;
-	philo[i].time_to_sleep = ft_atoi(argv[4]) * 1000;
+	philo[i].time_to_die = ft_atoi(argv[2]);
+	philo[i].time_to_eat = ft_atoi(argv[3]);
+	philo[i].time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		philo[i].times_must_eat = ft_atoi(argv[5]);
 	else
@@ -31,6 +31,7 @@ int	main(int argc, char **argv)
 	int				start;
 	t_philo			*philo;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	print;
 
 
 	if (argc != 5 && argc != 6)
@@ -44,6 +45,7 @@ int	main(int argc, char **argv)
 	num_of_philos = ft_atoi(argv[1]);
 	philo = malloc(num_of_philos * (sizeof(t_philo)));
 	forks = malloc(num_of_philos * (sizeof(pthread_mutex_t)));
+	pthread_mutex_init(&print, NULL); 
 	while (++i < num_of_philos)
 		pthread_mutex_init(&forks[i], NULL);
 	i = -1;
@@ -53,6 +55,7 @@ int	main(int argc, char **argv)
 		philo[i].left = &forks[i];
 		philo[i].right = &forks[(i + 1) % num_of_philos];
 		philo[i].start = start;
+		philo[i].print = &print;
 	}
 	i = -1;
 	while (++i < num_of_philos)
@@ -66,7 +69,7 @@ int	main(int argc, char **argv)
 		while (++i < num_of_philos)
 			if (is_died(&philo[i]))
 			{	
-				printf("hello\n");
+				printf("%d %d died\n", getting_time() - philo[i].start, i + 1);
 				exit(0);
 			}
 				//return (0);
