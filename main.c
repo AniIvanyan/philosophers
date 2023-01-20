@@ -6,7 +6,7 @@
 /*   By: aivanyan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 02:35:29 by aivanyan          #+#    #+#             */
-/*   Updated: 2023/01/20 20:56:27 by zkarapet         ###   ########.fr       */
+/*   Updated: 2023/01/20 22:44:05 by zkarapet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	philo_initializer(t_philo *philo, int i, char **argv, int argc)
 	else
 		philo[i].times_must_eat = -1;
 	philo[i].last_eat_time = 0;
+	philo[i].eat_time = 0;
 }
 
 int	main(int argc, char **argv)
@@ -67,12 +68,18 @@ int	main(int argc, char **argv)
 	{
 		i = -1;
 		while (++i < num_of_philos)
+		{	
 			if (is_died(&philo[i]))
 			{	
 				printf("%d %d died\n", getting_time() - philo[i].start, i + 1);
-				exit(0);
+			//	exit(0);
+				return (0);
 			}
-				//return (0);
+			if (simulation_stops(philo, num_of_philos))
+			{
+				printf("simulation stopped\n");
+				return (0);
+			}
+		}
 	}
 }
-
