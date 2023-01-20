@@ -6,7 +6,7 @@
 /*   By: aivanyan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 02:37:10 by aivanyan          #+#    #+#             */
-/*   Updated: 2023/01/20 22:41:59 by zkarapet         ###   ########.fr       */
+/*   Updated: 2023/01/20 23:59:34 by zkarapet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,4 +99,31 @@ void	ft_printf(int time, int num, char *str, pthread_mutex_t *print)
 	printf("%d %d ", time, num + 1);
 	printf("%s\n", str);
 	pthread_mutex_unlock(print);
+}
+
+void	free_philos(t_philo *philo, int num_philos)
+{
+	int	i;
+	
+	i = 0;
+	while (i < num_philos)
+		free(&philo[i++]);
+}
+
+void	destroy_mutex(pthread_mutex_t *forks, pthread_mutex_t print, int num_forks)
+{
+	int	i;
+
+	i = 0;
+	while (i < num_forks)
+		pthread_mutex_destroy(&forks[i++]);
+	pthread_mutex_destroy(&print);
+}	
+
+void	ft_exit(t_philo *philo, pthread_mutex_t *forks, pthread_mutex_t print, int num)
+{
+	//free_philos(philo, num);
+	free(philo);
+	destroy_mutex(forks, print, num);
+	exit(0);
 }

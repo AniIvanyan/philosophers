@@ -6,7 +6,7 @@
 /*   By: aivanyan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 02:35:29 by aivanyan          #+#    #+#             */
-/*   Updated: 2023/01/20 22:44:05 by zkarapet         ###   ########.fr       */
+/*   Updated: 2023/01/21 00:14:29 by zkarapet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void	philo_initializer(t_philo *philo, int i, char **argv, int argc)
 	philo[i].time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		philo[i].times_must_eat = ft_atoi(argv[5]);
-	else
-		philo[i].times_must_eat = -1;
+	else if (argc != 6)
+		philo[i].times_must_eat = 0;
 	philo[i].last_eat_time = 0;
 	philo[i].eat_time = 0;
 }
@@ -34,11 +34,9 @@ int	main(int argc, char **argv)
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print;
 
-
 	if (argc != 5 && argc != 6)
 	{
-		//TODO
-		printf("Too many arguments");
+		printf("Argument numbers are incorrect\n");
 		return (0);
 	}
 	start = getting_time();
@@ -70,16 +68,15 @@ int	main(int argc, char **argv)
 		while (++i < num_of_philos)
 		{	
 			if (is_died(&philo[i]))
-			{	
-				printf("%d %d died\n", getting_time() - philo[i].start, i + 1);
-			//	exit(0);
-				return (0);
-			}
-			if (simulation_stops(philo, num_of_philos))
 			{
-				printf("simulation stopped\n");
-				return (0);
+				printf("%d %d died\n", getting_time() - philo[i].start, i + 1);
+				ft_exit(philo, forks, print, num_of_philos);
 			}
 		}
+		//if (simulation_stops(philo, num_of_philos))
+		//{
+		//	printf("simulation stopped\n");
+		//	ft_exit(philo, forks, print, num_of_philos);
+		//}
 	}
 }
