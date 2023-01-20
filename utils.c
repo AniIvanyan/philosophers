@@ -6,7 +6,7 @@
 /*   By: aivanyan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 02:37:10 by aivanyan          #+#    #+#             */
-/*   Updated: 2023/01/19 00:57:08 by aivanyan         ###   ########.fr       */
+/*   Updated: 2023/01/20 06:47:37 by zkarapet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	ft_usleep(int ms)
 	}
 }
 
-void	is_died(t_philo *philo)
+int	is_died(t_philo *philo)
 {
 	int	cur;
 	int	dif;
@@ -75,13 +75,14 @@ void	is_died(t_philo *philo)
 	cur = getting_time();
 	dif = cur - philo->last_eat_time;
 	if (dif >= philo->time_to_die)
-		philo->must_die = 1;
+		return (1);
+	return (0);
 }
 
-void	ft_printf(int time, int num, char *str, pthread_mutex_t *print)
+void	ft_printf(int time, int num, char *str)//, pthread_mutex_t *print)
 {
-	pthread_mutex_lock(print);
+//	pthread_mutex_lock(print);
 	printf("%d %d ", time, num);
 	printf("%s\n", str);
-	pthread_mutex_unlock(print);
+//	pthread_mutex_unlock(print);
 }

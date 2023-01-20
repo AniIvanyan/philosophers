@@ -6,7 +6,7 @@
 /*   By: aivanyan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 02:37:25 by aivanyan          #+#    #+#             */
-/*   Updated: 2023/01/19 00:56:34 by aivanyan         ###   ########.fr       */
+/*   Updated: 2023/01/20 06:48:54 by zkarapet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ typedef struct s_philo
 	pthread_mutex_t		*left;
 	pthread_mutex_t		*right;
 	int					last_eat_time;
-	int					must_die;
+	int					start;
 }	t_philo;
 
 //utils.c
@@ -39,8 +39,8 @@ int		ft_isspace(int c);
 int		ft_atoi(const char *str);
 int		getting_time(void);
 void	ft_usleep(int ms);
-void	is_died(t_philo *philo);
-void	ft_printf(int time, int num, char *str, pthread_mutex_t *print);
+int		is_died(t_philo *philo);
+void	ft_printf(int time, int num, char *str);//, pthread_mutex_t *print);
 
 //philo.c
 void	*philos(void *data);
