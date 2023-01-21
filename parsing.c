@@ -6,7 +6,7 @@
 /*   By: zkarapet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 23:15:01 by zkarapet          #+#    #+#             */
-/*   Updated: 2023/01/22 00:33:17 by zkarapet         ###   ########.fr       */
+/*   Updated: 2023/01/22 02:13:19 by zkarapet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,3 @@ int	checking_parse_error(int argc, char **argv)
 	}
 	return (0);
 }
-
