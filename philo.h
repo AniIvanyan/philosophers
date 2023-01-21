@@ -6,7 +6,7 @@
 /*   By: aivanyan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 02:37:25 by aivanyan          #+#    #+#             */
-/*   Updated: 2023/01/20 23:23:24 by zkarapet         ###   ########.fr       */
+/*   Updated: 2023/01/21 14:14:33 by zkarapet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	ft_usleep(int ms);
 int		is_died(t_philo *philo);
 void	ft_printf(int time, int num, char *str, pthread_mutex_t *print);
 int		simulation_stops(t_philo *philo, int num_philos);
-void	free_philos(t_philo *philo, int num_philos);
 void	destroy_mutex(pthread_mutex_t *forks, pthread_mutex_t print, int num_forks);
 void	ft_exit(t_philo *philo, pthread_mutex_t *forks, pthread_mutex_t print, int num);
 

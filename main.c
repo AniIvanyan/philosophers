@@ -6,21 +6,20 @@
 /*   By: aivanyan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 02:35:29 by aivanyan          #+#    #+#             */
-/*   Updated: 2023/01/21 00:14:29 by zkarapet         ###   ########.fr       */
+/*   Updated: 2023/01/21 14:58:25 by zkarapet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-void	philo_initializer(t_philo *philo, int i, char **argv, int argc)
+void	philo_initializer(t_philo *philo, int i, char **argv)
 {
 	philo[i].philo_num = i;
 	philo[i].time_to_die = ft_atoi(argv[2]);
 	philo[i].time_to_eat = ft_atoi(argv[3]);
 	philo[i].time_to_sleep = ft_atoi(argv[4]);
-	if (argc == 6)
+	philo[i].times_must_eat = -1;
+	if (argv[5])
 		philo[i].times_must_eat = ft_atoi(argv[5]);
-	else if (argc != 6)
-		philo[i].times_must_eat = 0;
 	philo[i].last_eat_time = 0;
 	philo[i].eat_time = 0;
 }
@@ -50,7 +49,7 @@ int	main(int argc, char **argv)
 	i = -1;
 	while (++i < num_of_philos)
 	{
-		philo_initializer(philo, i, argv, argc);
+		philo_initializer(philo, i, argv);
 		philo[i].left = &forks[i];
 		philo[i].right = &forks[(i + 1) % num_of_philos];
 		philo[i].start = start;
@@ -58,7 +57,7 @@ int	main(int argc, char **argv)
 	}
 	i = -1;
 	while (++i < num_of_philos)
-		pthread_create(&philo[i].id, NULL, philos,(void *)&philo[i]);
+		pthread_create(&philo[i].id, NULL, philos, (void *)&philo[i]);
 	i = -1;
 	while (++i < num_of_philos)
 		pthread_detach(philo[i].id);
@@ -66,17 +65,21 @@ int	main(int argc, char **argv)
 	{
 		i = -1;
 		while (++i < num_of_philos)
-		{	
+		{
 			if (is_died(&philo[i]))
 			{
 				printf("%d %d died\n", getting_time() - philo[i].start, i + 1);
 				ft_exit(philo, forks, print, num_of_philos);
+				return (0);
 			}
 		}
-		//if (simulation_stops(philo, num_of_philos))
-		//{
-		//	printf("simulation stopped\n");
-		//	ft_exit(philo, forks, print, num_of_philos);
-		//}
+		if (simulation_stops(philo, num_of_philos))
+		{
+			printf("simulation stopped\n");
+			return (0);
+			//exit(0);
+	//		ft_exit(philo, forks, print, num_of_philos);
+		}
 	}
+	return (0);
 }

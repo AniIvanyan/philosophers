@@ -6,7 +6,7 @@
 /*   By: aivanyan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 02:37:10 by aivanyan          #+#    #+#             */
-/*   Updated: 2023/01/20 23:59:34 by zkarapet         ###   ########.fr       */
+/*   Updated: 2023/01/21 14:58:38 by zkarapet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,14 @@ int	simulation_stops(t_philo *philo, int num_philo)
 	while (i < num_philo)
 	{
 		if (philo[i].eat_time < philo[i].times_must_eat)
+		{
+			return (0);
+		}
+		if (philo[i].times_must_eat == -1)
 			return (0);
 		i++;
 	}
+	//printf("eat_time = %d, times_must_eat = %d\n", philo[i - 1].eat_time, philo[i - 1].times_must_eat);
 	return (1);
 }
 
@@ -99,15 +104,6 @@ void	ft_printf(int time, int num, char *str, pthread_mutex_t *print)
 	printf("%d %d ", time, num + 1);
 	printf("%s\n", str);
 	pthread_mutex_unlock(print);
-}
-
-void	free_philos(t_philo *philo, int num_philos)
-{
-	int	i;
-	
-	i = 0;
-	while (i < num_philos)
-		free(&philo[i++]);
 }
 
 void	destroy_mutex(pthread_mutex_t *forks, pthread_mutex_t print, int num_forks)
@@ -122,8 +118,7 @@ void	destroy_mutex(pthread_mutex_t *forks, pthread_mutex_t print, int num_forks)
 
 void	ft_exit(t_philo *philo, pthread_mutex_t *forks, pthread_mutex_t print, int num)
 {
-	//free_philos(philo, num);
 	free(philo);
 	destroy_mutex(forks, print, num);
-	exit(0);
+	free(forks);
 }
