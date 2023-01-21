@@ -6,7 +6,7 @@
 /*   By: aivanyan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 02:37:25 by aivanyan          #+#    #+#             */
-/*   Updated: 2023/01/22 00:27:35 by zkarapet         ###   ########.fr       */
+/*   Updated: 2023/01/22 01:50:33 by zkarapet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,23 @@
 typedef struct s_philo
 {
 	pthread_t			id;
-	int					philo_num;
+	int					num;
 	int					time_to_die;
 	int					time_to_eat;
 	int					time_to_sleep;
 	int					times_must_eat;
 	pthread_mutex_t		*left;
 	pthread_mutex_t		*right;
-	pthread_mutex_t		*print;
+	pthread_mutex_t		*p;
 	int					last_eat_time;
-	int					start;
+	int					s;
 	int					eat_time;
 }	t_philo;
 
 //utils.c
 int		ft_isdigit(int c);
 int		ft_isspace(int c);
-int		getting_time(void);
+int		get_time(void);
 void	ft_usleep(int ms);
 int		is_died(t_philo *philo);
 void	ft_printf(int time, int num, char *str, pthread_mutex_t *print);

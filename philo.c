@@ -6,7 +6,7 @@
 /*   By: aivanyan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 03:40:33 by aivanyan          #+#    #+#             */
-/*   Updated: 2023/01/21 23:59:23 by zkarapet         ###   ########.fr       */
+/*   Updated: 2023/01/22 01:51:30 by zkarapet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,26 +14,26 @@
 
 void	*philos(void *data)
 {
-	t_philo			*philo;
-	 
-	philo = (t_philo *)data;
-	if (philo->philo_num % 2 == 0)
+	t_philo	*p;
+
+	p = (t_philo *)data;
+	if (p->num % 2 == 0)
 		ft_usleep(200);
 	while (1)
 	{
-		pthread_mutex_lock(philo->left);
-		ft_printf(getting_time() - philo->start, philo->philo_num, "has taken the left fork", philo->print);
-		pthread_mutex_lock(philo->right);
-		ft_printf(getting_time() - philo->start, philo->philo_num, "has taken the right fork", philo->print);
-		ft_printf(getting_time() - philo->start, philo->philo_num, "is eating", philo->print);
-		if (philo->times_must_eat != -1)
-			philo->eat_time++;
-		philo->last_eat_time = getting_time();
-		ft_usleep(philo->time_to_eat);
-		pthread_mutex_unlock(philo->right);
-		pthread_mutex_unlock(philo->left);
-		ft_printf(getting_time() - philo->start, philo->philo_num, "is sleeping",  philo->print);
-		ft_usleep(philo->time_to_sleep);
-		ft_printf(getting_time() - philo->start, philo->philo_num, "is thinking", philo->print);
+		pthread_mutex_lock(p->left);
+		ft_printf(get_time() - p->s, p->num, "has taken the left fork", p->p);
+		pthread_mutex_lock(p->right);
+		ft_printf(get_time() - p->s, p->num, "has taken the right fork", p->p);
+		ft_printf(get_time() - p->s, p->num, "is eating", p->p);
+		if (p->times_must_eat != -1)
+			p->eat_time++;
+		p->last_eat_time = get_time();
+		ft_usleep(p->time_to_eat);
+		pthread_mutex_unlock(p->right);
+		pthread_mutex_unlock(p->left);
+		ft_printf(get_time() - p->s, p->num, "is sleeping", p->p);
+		ft_usleep(p->time_to_sleep);
+		ft_printf(get_time() - p->s, p->num, "is thinking", p->p);
 	}
 }

@@ -6,14 +6,14 @@
 /*   By: aivanyan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 02:35:29 by aivanyan          #+#    #+#             */
-/*   Updated: 2023/01/22 00:27:14 by zkarapet         ###   ########.fr       */
+/*   Updated: 2023/01/22 01:49:57 by zkarapet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 void	philo_initializer(t_philo *philo, int i, char **argv)
 {
-	philo[i].philo_num = i;
+	philo[i].num = i;
 	philo[i].time_to_die = ft_atoi(argv[2]);
 	philo[i].time_to_eat = ft_atoi(argv[3]);
 	philo[i].time_to_sleep = ft_atoi(argv[4]);
@@ -44,7 +44,7 @@ int	main(int argc, char **argv)
 		printf("0 1 died\n");
 		return (0);
 	}
-	start = getting_time();
+	start = get_time();
 	i = -1;
 	philo = malloc(num_of_philos * (sizeof(t_philo)));
 	forks = malloc(num_of_philos * (sizeof(pthread_mutex_t)));
@@ -57,8 +57,8 @@ int	main(int argc, char **argv)
 		philo_initializer(philo, i, argv);
 		philo[i].left = &forks[i];
 		philo[i].right = &forks[(i + 1) % num_of_philos];
-		philo[i].start = start;
-		philo[i].print = &print;
+		philo[i].s = start;
+		philo[i].p = &print;
 	}
 	i = -1;
 	while (++i < num_of_philos)
@@ -73,7 +73,7 @@ int	main(int argc, char **argv)
 		{
 			if (is_died(&philo[i]))
 			{
-				printf("%d %d died\n", getting_time() - philo[i].start, i + 1);
+				printf("%d %d died\n", get_time() - philo[i].s, i + 1);
 				ft_exit(philo, forks, print, num_of_philos);
 				return (0);
 			}

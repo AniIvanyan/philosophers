@@ -6,7 +6,7 @@
 /*   By: aivanyan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 02:37:10 by aivanyan          #+#    #+#             */
-/*   Updated: 2023/01/22 00:28:28 by zkarapet         ###   ########.fr       */
+/*   Updated: 2023/01/22 01:52:05 by zkarapet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	ft_isspace(int c)
 		|| c == '\r' || c == '\t' || c == '\v');
 }
 
-int	getting_time(void)
+int	get_time(void)
 {
 	struct timeval	tv;
 	gettimeofday(&tv, NULL);
@@ -35,12 +35,12 @@ void	ft_usleep(int ms)
 	int	start;
 	int	cur;
 	
-	start = getting_time();
-	cur = getting_time();
+	start = get_time();
+	cur = get_time();
 	while (cur - start < ms)
 	{
 		usleep(10);
-		cur = getting_time();
+		cur = get_time();
 	}
 }
 
@@ -49,7 +49,7 @@ int	is_died(t_philo *philo)
 	int	cur;
 	int	dif;
 	
-	cur = getting_time();
+	cur = get_time();
 	dif = cur - philo->last_eat_time;
 	if (dif >= philo->time_to_die)
 		return (1);
