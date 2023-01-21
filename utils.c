@@ -6,7 +6,7 @@
 /*   By: aivanyan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 02:37:10 by aivanyan          #+#    #+#             */
-/*   Updated: 2023/01/21 14:58:38 by zkarapet         ###   ########.fr       */
+/*   Updated: 2023/01/21 22:49:12 by zkarapet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ int	simulation_stops(t_philo *philo, int num_philo)
 			return (0);
 		i++;
 	}
-	//printf("eat_time = %d, times_must_eat = %d\n", philo[i - 1].eat_time, philo[i - 1].times_must_eat);
 	return (1);
 }
 

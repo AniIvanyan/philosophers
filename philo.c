@@ -6,7 +6,7 @@
 /*   By: aivanyan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 03:40:33 by aivanyan          #+#    #+#             */
-/*   Updated: 2023/01/21 14:47:30 by zkarapet         ###   ########.fr       */
+/*   Updated: 2023/01/21 22:55:07 by zkarapet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	*philos(void *data)
 		pthread_mutex_lock(philo->right);
 		ft_printf(getting_time() - philo->start, philo->philo_num, "has taken the right fork", philo->print);
 		ft_printf(getting_time() - philo->start, philo->philo_num, "is eating", philo->print);
-		printf("eat time hgkv  == %d\n", philo->times_must_eat);
 		if (philo->times_must_eat != -1)
 			philo->eat_time++;
 		philo->last_eat_time = getting_time();

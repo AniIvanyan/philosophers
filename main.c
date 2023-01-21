@@ -6,7 +6,7 @@
 /*   By: aivanyan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 02:35:29 by aivanyan          #+#    #+#             */
-/*   Updated: 2023/01/21 14:58:25 by zkarapet         ###   ########.fr       */
+/*   Updated: 2023/01/21 22:54:54 by zkarapet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,14 @@ int	main(int argc, char **argv)
 		printf("Argument numbers are incorrect\n");
 		return (0);
 	}
+	num_of_philos = ft_atoi(argv[1]);
+	if (num_of_philos == 1)
+	{
+		printf("0 1 died\n");
+		return (0);
+	}
 	start = getting_time();
 	i = -1;
-	num_of_philos = ft_atoi(argv[1]);
 	philo = malloc(num_of_philos * (sizeof(t_philo)));
 	forks = malloc(num_of_philos * (sizeof(pthread_mutex_t)));
 	pthread_mutex_init(&print, NULL); 
@@ -77,9 +82,6 @@ int	main(int argc, char **argv)
 		{
 			printf("simulation stopped\n");
 			return (0);
-			//exit(0);
-	//		ft_exit(philo, forks, print, num_of_philos);
 		}
 	}
-	return (0);
 }
