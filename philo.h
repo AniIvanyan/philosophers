@@ -6,7 +6,7 @@
 /*   By: aivanyan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 02:37:25 by aivanyan          #+#    #+#             */
-/*   Updated: 2023/01/22 01:50:33 by zkarapet         ###   ########.fr       */
+/*   Updated: 2023/01/22 02:09:14 by zkarapet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,13 @@ int		ft_isdigit(int c);
 int		ft_isspace(int c);
 int		get_time(void);
 void	ft_usleep(int ms);
+
+//utils2.c
 int		is_died(t_philo *philo);
 void	ft_printf(int time, int num, char *str, pthread_mutex_t *print);
 int		simulation_stops(t_philo *philo, int num_philos);
-void	destroy_mutex(pthread_mutex_t *forks, pthread_mutex_t print, int num_forks);
-void	ft_exit(t_philo *philo, pthread_mutex_t *forks, pthread_mutex_t print, int num);
+void	destroy_mutex(pthread_mutex_t *f, pthread_mutex_t p, int num);
+void	ft_exit(t_philo *philo, pthread_mutex_t *f, pthread_mutex_t p, int num);
 
 //philo.c
 void	*philos(void *data);
