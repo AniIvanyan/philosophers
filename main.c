@@ -6,7 +6,7 @@
 /*   By: aivanyan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 02:35:29 by aivanyan          #+#    #+#             */
-/*   Updated: 2023/01/21 22:54:54 by zkarapet         ###   ########.fr       */
+/*   Updated: 2023/01/22 00:27:14 by zkarapet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ int	main(int argc, char **argv)
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	print;
 
-	if (argc != 5 && argc != 6)
+	if (checking_parse_error(argc, argv))
 	{
-		printf("Argument numbers are incorrect\n");
+		printf("Invalid input detected\n");
 		return (0);
 	}
 	num_of_philos = ft_atoi(argv[1]);

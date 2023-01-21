@@ -6,7 +6,7 @@
 /*   By: aivanyan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 02:37:25 by aivanyan          #+#    #+#             */
-/*   Updated: 2023/01/21 14:14:33 by zkarapet         ###   ########.fr       */
+/*   Updated: 2023/01/22 00:27:35 by zkarapet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <pthread.h>
 # include <unistd.h>
 # include <sys/time.h>
+# include <limits.h>
 
 typedef struct s_philo
 {
@@ -38,7 +39,6 @@ typedef struct s_philo
 //utils.c
 int		ft_isdigit(int c);
 int		ft_isspace(int c);
-int		ft_atoi(const char *str);
 int		getting_time(void);
 void	ft_usleep(int ms);
 int		is_died(t_philo *philo);
@@ -49,4 +49,10 @@ void	ft_exit(t_philo *philo, pthread_mutex_t *forks, pthread_mutex_t print, int 
 
 //philo.c
 void	*philos(void *data);
+
+//parsing.c
+int	ft_strlen(char *s);
+int	ft_atoi(char *str);
+int	ft_isnumber(int argc, char **argv);
+int	checking_parse_error(int argc, char **argv);
 #endif
