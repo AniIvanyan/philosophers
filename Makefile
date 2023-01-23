@@ -3,7 +3,7 @@ NAME = philo
 SRCS	= $(wildcard *.c)
 OBJS	= $(SRCS:.c=.o)
 CC		= cc
-CFLAGS	= -pthread -Wall -Wextra -Werror -g -ggdb3 #-fsanitize=address
+CFLAGS	= -pthread -Wall -Wextra -Werror 
 RM		= rm -f
 
 all: $(NAME)

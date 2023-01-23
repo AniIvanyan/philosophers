@@ -6,82 +6,115 @@
 /*   By: aivanyan <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 02:35:29 by aivanyan          #+#    #+#             */
-/*   Updated: 2023/01/22 02:03:34 by zkarapet         ###   ########.fr       */
+/*   Updated: 2023/01/24 01:04:37 by zkarapet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-void	philo_initializer(t_philo *philo, int i, char **argv)
+
+void	initializer1(t_philo *philo, int num, int start, char **argv)
 {
-	philo[i].num = i;
-	philo[i].time_to_die = ft_atoi(argv[2]);
-	philo[i].time_to_eat = ft_atoi(argv[3]);
-	philo[i].time_to_sleep = ft_atoi(argv[4]);
-	philo[i].times_must_eat = -1;
-	if (argv[5])
-		philo[i].times_must_eat = ft_atoi(argv[5]);
-	philo[i].last_eat_time = 0;
-	philo[i].eat_time = 0;
+	int	i;
+
+	i = -1;
+	while (++i < num)
+	{
+		philo[i].num = i;
+		philo[i].time_to_die = ft_atoi(argv[2]);
+		philo[i].time_to_eat = ft_atoi(argv[3]);
+		philo[i].time_to_sleep = ft_atoi(argv[4]);
+		philo[i].times_must_eat = -1;
+		if (argv[5])
+			philo[i].times_must_eat = ft_atoi(argv[5]);
+		philo[i].last_eat_time = 0;
+		philo[i].eat_time = 0;
+		philo[i].s = start;
+	}
 }
 
-int	main(int argc, char **argv)
+void	initializer2(t_philo *p, pthread_mutex_t *f, pthread_mutex_t *pr, int n)
 {
-	int				i;
-	int				num_of_philos;
-	int				start;
-	t_philo			*philo;
-	pthread_mutex_t	*forks;
-	pthread_mutex_t	print;
+	int	i;
 
+	i = -1;
+	while (++i < n)
+	{
+		p[i].left = &f[i];
+		p[i].right = &f[(i + 1) % n];
+		p[i].p = pr;
+	}
+}
+
+int	main_process(int num, t_philo *p, pthread_mutex_t *f, pthread_mutex_t pr)
+{
+	int	i;
+
+	while (1)
+	{
+		i = -1;
+		while (++i < num)
+		{
+			if (is_died(&p[i]))
+			{
+				printf("%d %d died\n", get_time() - p[i].s, i + 1);
+				ft_exit(p, f, pr, num);
+				return (0);
+			}
+		}
+		if (simulation_stops(p, num))
+		{
+			printf("simulation stopped\n");
+			ft_exit(p, f, pr, num);
+			return (0);
+		}
+	}
+	return (1);
+}
+
+int	checking(char **argv, int argc)
+{
 	if (checking_parse_error(argc, argv))
 	{
 		printf("Invalid input detected\n");
 		return (0);
 	}
-	num_of_philos = ft_atoi(argv[1]);
-	if (num_of_philos == 1)
+	if (ft_atoi(argv[1]) == 1)
 	{
 		printf("0 1 died\n");
 		return (0);
 	}
-	start = get_time();
-	i = -1;
-	philo = malloc(num_of_philos * (sizeof(t_philo)));
-	forks = malloc(num_of_philos * (sizeof(pthread_mutex_t)));
-	pthread_mutex_init(&print, NULL); 
-	while (++i < num_of_philos)
-		pthread_mutex_init(&forks[i], NULL);
-	i = -1;
-	while (++i < num_of_philos)
+	if (argc == 6 && ft_atoi(argv[5]) == 0)
 	{
-		philo_initializer(philo, i, argv);
-		philo[i].left = &forks[i];
-		philo[i].right = &forks[(i + 1) % num_of_philos];
-		philo[i].s = start;
-		philo[i].p = &print;
+		printf("simulation stopped\n");
+		return (0);
 	}
+	return (1);
+}
+
+int	main(int argc, char **argv)
+{
+	int				i;
+	int				start;
+	t_philo			*philo;
+	pthread_mutex_t	*forks;
+	pthread_mutex_t	print;
+
+	start = get_time();
+	if (!checking(argv, argc))
+		return (0);
 	i = -1;
-	while (++i < num_of_philos)
+	philo = malloc(ft_atoi(argv[1]) * (sizeof(t_philo)));
+	forks = malloc(ft_atoi(argv[1]) * (sizeof(pthread_mutex_t)));
+	pthread_mutex_init(&print, NULL);
+	while (++i < ft_atoi(argv[1]))
+		pthread_mutex_init(&forks[i], NULL);
+	initializer1(philo, ft_atoi(argv[1]), start, argv);
+	initializer2(philo, forks, &print, ft_atoi(argv[1]));
+	i = -1;
+	while (++i < ft_atoi(argv[1]))
 		pthread_create(&philo[i].id, NULL, philos, (void *)&philo[i]);
 	i = -1;
-	while (++i < num_of_philos)
+	while (++i < ft_atoi(argv[1]))
 		pthread_detach(philo[i].id);
-	while (1)
-	{
-		i = -1;
-		while (++i < num_of_philos)
-		{
-			if (is_died(&philo[i]))
-			{
-				printf("%d %d died\n", get_time() - philo[i].s, i + 1);
-				ft_exit(philo, forks, print, num_of_philos);
-				return (0);
-			}
-		}
-		if (simulation_stops(philo, num_of_philos))
-		{
-			printf("simulation stopped\n");
-			return (0);
-		}
-	}
+	main_process(ft_atoi(argv[1]), philo, forks, print);
 }
