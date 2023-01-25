@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   philo.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: aivanyan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: aivanyan <aivanyan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/14 03:40:33 by aivanyan          #+#    #+#             */
-/*   Updated: 2023/01/22 03:01:26 by zkarapet         ###   ########.fr       */
+/*   Created: 2023/01/25 18:10:19 by aivanyan          #+#    #+#             */
+/*   Updated: 2023/01/25 18:11:21 by aivanyan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	*philos(void *data)
 
 	p = (t_philo *)data;
 	if (p->num % 2 == 0)
-		ft_usleep(200);
+		ft_usleep(25);
 	while (1)
 	{
 		pthread_mutex_lock(p->left);
